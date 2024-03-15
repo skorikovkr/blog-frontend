@@ -5,7 +5,7 @@ const route = useRoute();
 
 const currentPage = computed(() => (Number(route.query['page'] ?? 1)));
 const defaultPerPage = 15;
-const selectedPerPage = ref(defaultPerPage);
+const selectedPerPage = ref(Number(route.query['perPage']) ?? defaultPerPage);
 const perPage = computed(() => (Number(route.query['perPage'] ?? defaultPerPage)));
 
 const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
@@ -32,12 +32,13 @@ const nextPagination = async () => {
   await refresh();
 }
 
-const perPageChanged = async () => {
+watch(selectedPerPage, async () => {
   await router.push({ path: '', query: { 
     page: '1',
     perPage: selectedPerPage.value.toString(),
   }})
-}
+  await refresh();
+})
 </script>
 
 <template>
@@ -53,13 +54,13 @@ const perPageChanged = async () => {
         class="post-card" 
       >
         <NuxtLink :to="`posts/${post.slug}`">
-          {{ post.title }}
+          <h2>{{ post.title }}</h2>
         </NuxtLink>
       </div>
       <div class="pagination">
         <button v-if="(data as any).current_page > 1" @click="prevPagination">Назад</button>
-        <select @change="perPageChanged" v-model="selectedPerPage">
-          <option value="1">5</option>
+        <select v-model="selectedPerPage">
+          <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
         </select>
