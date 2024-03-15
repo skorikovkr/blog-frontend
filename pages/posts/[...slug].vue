@@ -32,6 +32,13 @@ const postContent = (data as any).value.data.content.map((block: any) => {
         <template v-else-if="block.type == 'text'">
           <p>{{ block.content }}</p>
         </template>
+        <template v-else-if="block.type == 'code'">
+          <CodeSnippet
+            :code="block.content" 
+            :language="block.language"
+            class-name="rounded-lg"
+          />
+        </template>
       </div>
     </div>
     <div v-else>
