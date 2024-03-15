@@ -21,7 +21,11 @@ const postContent = (data as any).value.data.content.map((block: any) => {
     >
       <h1>{{ (data as any).data.title }}</h1>
       <time>{{ (data as any).data.date }}</time>
-      <div v-for="block in postContent" :key="block.id" class="post-block">
+      <div
+        v-for="block in postContent"
+        :key="block.id"
+        class="post-block"
+      >
         <template v-if="block.type == 'image'">
           <ServerImage :src="block.src" />
         </template>

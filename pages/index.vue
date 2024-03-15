@@ -3,10 +3,11 @@
 const router = useRouter();
 const route = useRoute();
 
-const currentPage = computed(() => (Number(route.query['page'] ?? 1)));
-const defaultPerPage = 15;
-const selectedPerPage = ref(Number(route.query['perPage']) ?? defaultPerPage);
-const perPage = computed(() => (Number(route.query['perPage'] ?? defaultPerPage)));
+const perPageOptions = ['1', '5', '10', '15'];
+const defaultPerPage = perPageOptions[3];
+const currentPage = computed(() => (route.query['page'] ?? 1));
+const selectedPerPage = ref(route.query['perPage'] ? route.query['perPage'] : defaultPerPage);
+const perPage = computed(() => (route.query['perPage'] ? route.query['perPage'] : defaultPerPage));
 
 const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
   query: {
@@ -15,10 +16,9 @@ const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
   }
 });
 
-
 const prevPagination = async () => {
   await router.push({ path: '', query: { 
-    page: (currentPage.value - 1).toString(),
+    page: (Number(currentPage.value) - 1).toString(),
     perPage: (perPage.value).toString(),
   }})
   await refresh();
@@ -26,7 +26,7 @@ const prevPagination = async () => {
 
 const nextPagination = async () => {
   await router.push({ path: '', query: { 
-    page: (currentPage.value + 1).toString(),
+    page: (Number(currentPage.value) + 1).toString(),
     perPage: (perPage.value).toString(),
   }})
   await refresh();
@@ -58,13 +58,27 @@ watch(selectedPerPage, async () => {
         </NuxtLink>
       </div>
       <div class="pagination">
-        <button v-if="(data as any).current_page > 1" @click="prevPagination">Назад</button>
+        <button
+          v-if="(data as any).current_page > 1"
+          @click="prevPagination"
+        >
+          Назад
+        </button>
         <select v-model="selectedPerPage">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
+          <option 
+            v-for="option in perPageOptions" 
+            :key="option" 
+            :value="option"
+          >
+            {{ option }}
+          </option>
         </select>
-        <button v-if="(data as any).current_page < (data as any).last_page" @click="nextPagination">Вперед</button>
+        <button
+          v-if="(data as any).current_page < (data as any).last_page"
+          @click="nextPagination"
+        >
+          Вперед
+        </button>
       </div>
     </div>
     <div v-else>
