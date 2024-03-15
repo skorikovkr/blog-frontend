@@ -4,10 +4,13 @@ const router = useRouter();
 const route = useRoute();
 
 const currentPage = computed(() => (Number(route.query['page'] ?? 1)));
+const defaultPerPage = 15;
+const selectedPerPage = ref(defaultPerPage);
+const perPage = computed(() => (Number(route.query['perPage'] ?? defaultPerPage)));
 
 const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
   query: {
-    perPage: route.query['perPage'],
+    perPage: perPage,
     page: currentPage
   }
 });
@@ -16,7 +19,7 @@ const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
 const prevPagination = async () => {
   await router.push({ path: '', query: { 
     page: (currentPage.value - 1).toString(),
-    perPage: route.query['perPage'],
+    perPage: (perPage.value).toString(),
   }})
   await refresh();
 }
@@ -24,9 +27,16 @@ const prevPagination = async () => {
 const nextPagination = async () => {
   await router.push({ path: '', query: { 
     page: (currentPage.value + 1).toString(),
-    perPage: route.query['perPage'],
+    perPage: (perPage.value).toString(),
   }})
   await refresh();
+}
+
+const perPageChanged = async () => {
+  await router.push({ path: '', query: { 
+    page: '1',
+    perPage: selectedPerPage.value.toString(),
+  }})
 }
 </script>
 
@@ -48,6 +58,11 @@ const nextPagination = async () => {
       </div>
       <div class="pagination">
         <button v-if="(data as any).current_page > 1" @click="prevPagination">Назад</button>
+        <select @change="perPageChanged" v-model="selectedPerPage">
+          <option value="1">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
         <button v-if="(data as any).current_page < (data as any).last_page" @click="nextPagination">Вперед</button>
       </div>
     </div>
