@@ -14,7 +14,7 @@ const postContent = (data as any).value.data.content.map((block: any) => {
 </script>
 
 <template>
-  <div class="index-page">
+  <div class="post-page">
     <div 
       v-if="!pending"
       class="post-container" 

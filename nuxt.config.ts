@@ -27,6 +27,9 @@ export default defineNuxtConfig({
     },
     importPT: { from: path.resolve(__dirname, "./presets/wind-full/").replace(/\\/g, '/') },
   },
+  routeRules: {
+    '/posts/create': { ssr: false },
+  },
   experimental: {
     asyncContext: true
   }
