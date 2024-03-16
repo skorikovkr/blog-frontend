@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import textarea from '~/presets/wind-full/textarea';
 import type { ImagePostBlock, PostBlock } from '~/types/PostBlocks';
 
 const route = useRoute();
@@ -74,17 +73,41 @@ const handleImageChange = (id: number, e: Event) => {
 
 <template>
   <div class="create-post-page">
-    <form ref="postForm" id="postForm" enctype="multipart/form-data" @submit.prevent="handleCreatePost">
+    <form
+      id="postForm"
+      ref="postForm"
+      enctype="multipart/form-data"
+      @submit.prevent="handleCreatePost"
+    >
       <div class="post-main-info">
-        <label for="title">Введите заголовок статьи</label>
-        <input id="title" name="title" v-model="title">
-        <label for="locale">Выберите язык</label>
-        <select id="locale" name="locale" v-model="locale">
-          <option value="ru-RU">ru-RU</option>
-          <option value="en-US">en-US</option>
+        <label for="title">{{ $t('create_post.title_label') }}</label>
+        <input
+          id="title"
+          v-model="title"
+          name="title"
+        >
+        <label for="locale">{{ $t('create_post.lang_selectbox_label') }}</label>
+        <select
+          id="locale"
+          v-model="locale"
+          name="locale"
+        >
+          <option value="ru-RU">
+            ru-RU
+          </option>
+          <option value="en-US">
+            en-US
+          </option>
         </select>
-        <input name="content" hidden :value="serializedContent">
-        <input type="submit" value="Запостить статью">
+        <input
+          name="content"
+          hidden
+          :value="serializedContent"
+        >
+        <input
+          type="submit"
+          :value="$t('create_post.submit_button_text')"
+        >
       </div>
       <div
         v-for="block in content"
@@ -99,7 +122,7 @@ const handleImageChange = (id: number, e: Event) => {
           <template v-if="block.type == 'image'">
             <img :src="block.src ?? '/blank-post-photo.png'">
             <div class="image-container relative">
-              <label :for="'image_' + block.id">Выбрать изображение...</label>
+              <label :for="'image_' + block.id">{{ $t('create_post.image_block_label') }}</label>
               <input 
                 :id="'image_' + block.id" 
                 class="image-input" 
@@ -133,10 +156,10 @@ const handleImageChange = (id: number, e: Event) => {
       </div>
       <button
         class="add-block-button"
-        @click="handleAddBlockClick"
         type="button"
+        @click="handleAddBlockClick"
       >
-        Добавить блок
+        {{ $t('create_post.submit_button_text') }}
       </button>
     </form>
   </div>

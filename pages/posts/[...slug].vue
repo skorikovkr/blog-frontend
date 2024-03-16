@@ -20,7 +20,7 @@ const postContent = (data as any).value.data.content.map((block: any) => {
       class="post-container" 
     >
       <h1>{{ (data as any).data.title }}</h1>
-      <time>{{ (data as any).data.date }}</time>
+      <time>{{ $d((data as any).data.date) }}</time>
       <div
         v-for="block in postContent"
         :key="block.id"

@@ -62,7 +62,7 @@ watch(selectedPerPage, async () => {
           v-if="(data as any).current_page > 1"
           @click="prevPagination"
         >
-          Назад
+          {{ $t('pagination.prev') }}
         </button>
         <select v-model="selectedPerPage">
           <option 
@@ -77,12 +77,12 @@ watch(selectedPerPage, async () => {
           v-if="(data as any).current_page < (data as any).last_page"
           @click="nextPagination"
         >
-          Вперед
+          {{ $t('pagination.next') }}
         </button>
       </div>
     </div>
     <div v-else>
-      Загрузка...
+      {{ $t('index.loading_text') }}
     </div>
   </div>
 </template>

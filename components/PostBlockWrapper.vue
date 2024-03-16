@@ -6,13 +6,13 @@
     <div class="post-block-controls">
       <select v-model="blockType">
         <option value="text">
-          Текст
+          {{ $t('post_block_wrapper.text_block_name') }}
         </option>
         <option value="code">
-          Код
+          {{ $t('post_block_wrapper.code_block_name') }}
         </option>
         <option value="image">
-          Изображение
+          {{ $t('post_block_wrapper.image_block_name') }}
         </option>
       </select>
     </div>

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue", "@pinia/nuxt", "@nuxtjs/i18n"],
   runtimeConfig: {
     public: {
       backendUrl: process.env.NUXT_PUBLIC_BACKEND_URL,
@@ -26,6 +26,21 @@ export default defineNuxtConfig({
       unstyled: true
     },
     importPT: { from: path.resolve(__dirname, "./presets/wind-full/").replace(/\\/g, '/') },
+  },
+  i18n: {
+    locales: [
+      {
+        code: 'en-US',
+        name: 'English'
+      },
+      {
+        code: 'ru-RU',
+        name: 'Русский'
+      },
+    ],     
+    strategy: 'no_prefix',
+    defaultLocale: "ru-RU",
+    vueI18n: './i18n.config.ts'
   },
   routeRules: {
     '/posts/create': { ssr: false },

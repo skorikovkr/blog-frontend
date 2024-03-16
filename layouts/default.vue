@@ -3,6 +3,7 @@
 
 <template>
   <div class="layout-container relative min-h-[100vh] flex flex-col">
+    <LocaleSwitcher />
     <main class="w-full flex-1">
       <slot />
     </main>
