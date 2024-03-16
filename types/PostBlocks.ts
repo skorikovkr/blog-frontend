@@ -15,7 +15,7 @@ export type ImagePostBlock = {
   id: number;
   type: 'image';
   src?: string;
-  ['attached-to']?: string; 
+  ['attached_to']?: string; 
 };
 
 export type PostBlock = TextPostBlock | ImagePostBlock | CodePostBlock;

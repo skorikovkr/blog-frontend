@@ -3,8 +3,8 @@
 const router = useRouter();
 const route = useRoute();
 
-const perPageOptions = ['1', '5', '10', '15'];
-const defaultPerPage = perPageOptions[3];
+const perPageOptions = ['15', '10', '5', '1'];
+const defaultPerPage = perPageOptions[0];
 const currentPage = computed(() => (route.query['page'] ?? 1));
 const selectedPerPage = ref(route.query['perPage'] ? route.query['perPage'] : defaultPerPage);
 const perPage = computed(() => (route.query['perPage'] ? route.query['perPage'] : defaultPerPage));

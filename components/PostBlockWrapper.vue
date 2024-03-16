@@ -1,13 +1,19 @@
 <template>
   <div class="post-block-wrapper">
-    <div class="">
+    <div class="post-block-slot">
       <slot />
     </div>
     <div class="post-block-controls">
       <select v-model="blockType">
-        <option value="text">Текст</option>
-        <option value="code">Код</option>
-        <option value="image">Изображение</option>
+        <option value="text">
+          Текст
+        </option>
+        <option value="code">
+          Код
+        </option>
+        <option value="image">
+          Изображение
+        </option>
       </select>
     </div>
   </div>
