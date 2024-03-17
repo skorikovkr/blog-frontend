@@ -15,6 +15,9 @@ export default class FormImage {
     this.api = api;
     this.config = config;
     this.block = block;
+    if (this.block.src) {
+      this.src = this.block.src;
+    }
   }
 
   handleImageChange(e: Event) {

@@ -4,13 +4,10 @@ import Header from '@editorjs/header';
 import Paragraph from '@editorjs/paragraph';
 import CodeTool from '@editorjs/code';
 import InlineCode from '@editorjs/inline-code';
-import type { PostBlock } from '~/types/PostBlocks';
 import { onMounted } from 'vue';
 const { locale, locales } = useI18n()
 
 const runtimeConfig = useRuntimeConfig();
-const content = ref<PostBlock[]>([]);
-const serializedContent = ref('[]');
 const title = ref('');
 const lang = ref(locale.value);
 const postForm = ref();
@@ -40,16 +37,6 @@ const editor = new EditorJS({
       inlineToolbar: true,
     },
   },
-  data: { 
-    blocks: [
-      {
-        type : 'paragraph',
-        data : {
-          text : '',
-        }
-      },
-    ]
-  }
 });
 
 onMounted(async () => {

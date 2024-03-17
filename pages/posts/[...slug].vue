@@ -3,14 +3,7 @@
 const route = useRoute();
 
 const { data, pending } = await useLaravelFetch(`/api/posts/${route.params.slug}`);
-let blockCounter = 0;
-const postContent = (data as any).value.data.content.map((block: any) => {
-  blockCounter++;
-  return {
-    id: blockCounter,
-    ...block
-  }
-});
+const postContent = (data as any).value.data.content;
 </script>
 
 <template>
@@ -27,17 +20,21 @@ const postContent = (data as any).value.data.content.map((block: any) => {
         class="post-block"
       >
         <template v-if="block.type == 'image'">
-          <ServerImage :src="block.src" />
+          <ServerImage :src="block.data.src" />
         </template>
-        <template v-else-if="block.type == 'text'">
-          <p>{{ block.content }}</p>
+        <template v-else-if="block.type == 'paragraph'">
+          <p>{{ block.data.text }}</p>
         </template>
         <template v-else-if="block.type == 'code'">
           <CodeSnippet
-            :code="block.content" 
-            :language="block.language"
+            :code="block.data.code" 
+            :language="block.data.language"
             class-name="rounded-lg"
           />
+        </template>
+        <template v-else-if="block.type == 'header'">
+          <h2 v-if="block.data.level === 2">{{ block.data.text }}</h2>
+          <h3 v-else-if="block.data.level === 3">{{ block.data.text }}</h3>
         </template>
       </div>
     </div>
