@@ -25,6 +25,9 @@ export default defineNuxtConfig({
     options: {
       unstyled: true
     },
+    components: {
+        prefix: 'Prime'
+    },
     importPT: { from: path.resolve(__dirname, "./presets/wind-full/").replace(/\\/g, '/') },
   },
   i18n: {

@@ -21,13 +21,16 @@
       >
         {{ link.title }}
       </NuxtLink>
-      <LocaleSwitcher />
-      <ColorModePicker />
+      <ClientOnly>
+        <LocaleSwitcher />
+        <ColorModePicker />
+      </ClientOnly>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
+
 const navLinks = ref([
   {
     title: 'Home',

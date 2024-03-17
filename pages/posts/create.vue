@@ -99,7 +99,10 @@ const handleCreatePost = async () => {
         >
       </div>
 
-      <div id="editorjs-container" class="post-content editorjs-container"></div>
+      <div
+        id="editorjs-container"
+        class="post-content editorjs-container"
+      />
     </form>
   </div>
 </template>

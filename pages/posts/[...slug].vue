@@ -33,8 +33,12 @@ const postContent = (data as any).value.data.content;
           />
         </template>
         <template v-else-if="block.type == 'header'">
-          <h2 v-if="block.data.level === 2">{{ block.data.text }}</h2>
-          <h3 v-else-if="block.data.level === 3">{{ block.data.text }}</h3>
+          <h2 v-if="block.data.level === 2">
+            {{ block.data.text }}
+          </h2>
+          <h3 v-else-if="block.data.level === 3">
+            {{ block.data.text }}
+          </h3>
         </template>
       </div>
     </div>
