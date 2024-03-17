@@ -1,29 +1,71 @@
 <script lang="ts" setup>
-import type { ImagePostBlock, PostBlock } from '~/types/PostBlocks';
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import Paragraph from '@editorjs/paragraph';
+import CodeTool from '@editorjs/code';
+import InlineCode from '@editorjs/inline-code';
+import type { PostBlock } from '~/types/PostBlocks';
+import { onMounted } from 'vue';
+const { locale, locales } = useI18n()
 
-const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
-const blockCounter = ref(0);
 const content = ref<PostBlock[]>([]);
 const serializedContent = ref('[]');
 const title = ref('');
-const locale = ref('ru-RU');
+const lang = ref(locale.value);
 const postForm = ref();
+const editor = new EditorJS({
+  readOnly: false,
+  holder: 'editorjs-container',
+  tools: {
+    header: {
+      class: Header,
+      config: {
+        placeholder: 'Header',
+        levels: [2, 3]
+      },
+      shortcut: 'CMD+SHIFT+H'
+    },
+    image: FormImage,
+    code: {
+      class:  CodeTool,
+      shortcut: 'CMD+SHIFT+C'
+    },
+    inlineCode: {
+      class: InlineCode,
+      shortcut: 'CMD+SHIFT+C'
+    },
+    paragraph: {
+      class: Paragraph,
+      inlineToolbar: true,
+    },
+  },
+  data: { 
+    blocks: [
+      {
+        type : 'paragraph',
+        data : {
+          text : '',
+        }
+      },
+    ]
+  }
+});
 
-const handleAddBlockClick = () => {
-  content.value.push({
-    id: blockCounter.value,
-    type: 'text',
-    content: ''
-  });
-  blockCounter.value = blockCounter.value + 1;
-}
+onMounted(async () => {
+  try {
+    await editor.isReady;
+  } catch (reason) {
+    console.log(`Editor.js initialization failed because of ${reason}`)
+  }
+})
 
 const handleCreatePost = async () => {
-  serializedContent.value = JSON.stringify(content.value);
-  await nextTick();
-  const formData = new FormData(postForm.value);
+  
   try {
+    const content = await editor.save();
+    const formData = new FormData(postForm.value);
+    formData.append('content', JSON.stringify(content.blocks));
     const { data } = await $laravelFetch(runtimeConfig.public.backendUrl + '/api/posts', {
       method: 'POST',
       body: formData
@@ -33,41 +75,6 @@ const handleCreatePost = async () => {
     // TODO: highlight validation errors
     console.log(error);
   }
-}
-
-const handleChangeBlockType = (id: number, type: string) => {
-  const i = content.value.findIndex(el => el.id == id);
-  if (type == 'text') {
-    content.value[i] = {
-      content: '',
-      id: id,
-      type: 'text'
-    };
-  } else if (type == 'code') {
-    content.value[i] = {
-      content: '',
-      id: id,
-      type: 'code'
-    };
-  } else if (type == 'image') {
-    content.value[i] = {
-      src: undefined,
-      ['attached_to']: 'image_' + id.toString(),
-      id: id,
-      type: 'image'
-    };
-  }
-}
-
-const handleImageChange = (id: number, e: Event) => {
-  const file = ((e.target) as HTMLInputElement).files!.item(0);
-  if (file) {
-    const i = content.value.findIndex(el => el.id == id);
-    content.value[i] = {
-      ...(content.value[i] as ImagePostBlock),
-      src: URL.createObjectURL(file),
-    };
- }
 }
 </script>
 
@@ -89,78 +96,23 @@ const handleImageChange = (id: number, e: Event) => {
         <label for="locale">{{ $t('create_post.lang_selectbox_label') }}</label>
         <select
           id="locale"
-          v-model="locale"
+          v-model="lang"
           name="locale"
         >
-          <option value="ru-RU">
-            ru-RU
-          </option>
-          <option value="en-US">
-            en-US
+          <option
+            v-for="l in locales"
+            :key="l.code"
+          >
+            {{ l.code }}
           </option>
         </select>
-        <input
-          name="content"
-          hidden
-          :value="serializedContent"
-        >
         <input
           type="submit"
           :value="$t('create_post.submit_button_text')"
         >
       </div>
-      <div
-        v-for="block in content"
-        :key="block.id"
-        class="post-block border-y-2 border-black"
-      >
-        <PostBlockWrapper
-          :id="block.id"
-          :type="block.type"
-          @changed-block-type="handleChangeBlockType"
-        >
-          <template v-if="block.type == 'image'">
-            <img :src="block.src ?? '/blank-post-photo.png'">
-            <div class="image-container relative">
-              <label :for="'image_' + block.id">{{ $t('create_post.image_block_label') }}</label>
-              <input 
-                :id="'image_' + block.id" 
-                class="image-input" 
-                type="file" 
-                :name="'image_' + block.id" 
-                accept="image/png, image/jpeg"
-                @change="(e: Event) => handleImageChange(block.id, e)"
-              >
-            </div>
-          </template>
-          <template v-else-if="block.type == 'text'">
-            <textarea
-              v-model="block.content"
-              rows="5"
-              class="w-full"
-            />
-          </template>
-          <template v-else-if="block.type == 'code'">
-            <textarea
-              v-model="block.content"
-              rows="8"
-              class="w-full"
-            />
-            <CodeSnippet
-              :code="block.content" 
-              :language="block.language"
-              class-name="rounded-lg"
-            />
-          </template>
-        </PostBlockWrapper>
-      </div>
-      <button
-        class="add-block-button"
-        type="button"
-        @click="handleAddBlockClick"
-      >
-        {{ $t('create_post.submit_button_text') }}
-      </button>
+
+      <div id="editorjs-container" class="post-content editorjs-container"></div>
     </form>
   </div>
 </template>
