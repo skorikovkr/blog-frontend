@@ -73,36 +73,43 @@ const handleCreatePost = async () => {
       enctype="multipart/form-data"
       @submit.prevent="handleCreatePost"
     >
-      <div class="post-main-info">
-        <label for="title">{{ $t('create_post.title_label') }}</label>
+      <div class="post-main-info flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
+          <label for="title">{{ $t('create_post.title_label') }}:</label>
+          <PrimeInputText 
+            id="title"
+            v-model="title"
+            class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+            name="title" 
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="locale">{{ $t('create_post.lang_selectbox_label') }}:</label>
+          <PrimeDropdown 
+            id="locale" 
+            v-model="lang" 
+            :options="locales" 
+            option-label="code" 
+            class="w-full md:w-14rem" 
+          />
+        </div>
         <input
-          id="title"
-          v-model="title"
-          class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
-          name="title"
-        >
-        <label for="locale">{{ $t('create_post.lang_selectbox_label') }}</label>
-        <select
-          id="locale"
-          v-model="lang"
+          type="text"
           name="locale"
-        >
-          <option
-            v-for="l in locales"
-            :key="l.code"
-          >
-            {{ l.code }}
-          </option>
-        </select>
-        <input
-          type="submit"
-          :value="$t('create_post.submit_button_text')"
+          hidden 
+          :value="lang.code"
         >
       </div>
 
       <div
         id="editorjs-container"
-        class="post-content editorjs-container"
+        class="post-content editorjs-container my-6"
+      />
+
+      <PrimeButton 
+        type="submit" 
+        :label="$t('create_post.submit_button_text')"
       />
     </form>
   </div>

@@ -3,11 +3,8 @@
     <div>
       <NuxtLink to="/">
         <div class="flex items-center justify-between">
-          <div class="mr-3">
-            LOGO
-          </div>
-          <div class="hidden text-xl font-semibold sm:block">
-            SITE NAME
+          <div class="text-xl font-bold">
+            skorikovkr-blog
           </div>
         </div>
       </NuxtLink>
@@ -24,13 +21,15 @@
       <ClientOnly>
         <LocaleSwitcher />
         <ColorModePicker />
+        <MobileNav
+          :nav-links="navLinks"
+        />
       </ClientOnly>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
-
 const navLinks = ref([
   {
     title: 'Home',
