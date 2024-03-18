@@ -1,7 +1,33 @@
+<script lang="ts" setup>
+const { t }  = useI18n()
+useSeoMeta({
+  title: t('posts.index.meta.title'),
+  ogTitle: t('posts.index.meta.title'),
+  description: t('posts.index.meta.description'),
+  ogDescription: t('posts.index.meta.description')
+})
+
+const perPage  = ref('5');
+const page = ref('1');
+
+const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
+  query: {
+    page: page,
+    perPage: perPage
+  }
+});
+
+const handleOptionsChanged = async (currentPage: string, per: string) => {
+  perPage.value = per;
+  page.value = currentPage;
+  await refresh();
+}
+</script>
+
 <template>
   <div class="posts-page">
     <NuxtLink to="/posts/create">
-      <PrimeButton label="Write new post" />
+      <PrimeButton :label="$t('posts.index.write_new_post_button')" />
     </NuxtLink>
     <div 
       v-if="!pending"
@@ -16,7 +42,7 @@
           <article class="space-y-2 xl:grid xl:grid-cols-6 xl:items-baseline xl:space-y-0 ">
             <dl>
               <dt class="sr-only">
-                Published on
+                {{ $t('posts.index.meta.published_on') }}
               </dt>
               <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                 <time :dateTime="post.date">{{ $d(post.date) }}</time>
@@ -34,7 +60,7 @@
                 </h3>
               </div>
               <div class="prose max-w-none text-gray-500 dark:text-gray-400">
-                {{ post.description ?? "No description" }}
+                {{ post.description ?? $t('posts.index.no_description') }}
               </div>
             </div>
           </article>
@@ -53,24 +79,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-const perPage  = ref('5');
-const page = ref('1');
-
-const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
-  query: {
-    page: page,
-    perPage: perPage
-  }
-});
-
-const handleOptionsChanged = async (currentPage: string, per: string) => {
-  perPage.value = per;
-  page.value = currentPage;
-  await refresh();
-}
-</script>
 
 <style>
 

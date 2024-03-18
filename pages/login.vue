@@ -30,10 +30,13 @@ const {
 </script>
 
 <template>
-  <div class="login-form-container">
-    <form @submit.prevent="submit">
+  <div class="login-form-container flex justify-center">
+    <form 
+      class="w-full md:w-2/3 md:my-auto" 
+      @submit.prevent="submit"
+    >
       <div>
-        <label for="email">Email</label>
+        <label for="email">{{ $t('login.email') }}</label>
         <div>{{ errors.email?.[0] }}</div>
         <input
           id="email"
@@ -46,7 +49,7 @@ const {
       </div>
 
       <div class="mt-4">
-        <label for="password">Password</label>
+        <label for="password">{{ $t('login.password') }}</label>
         <div
           v-for="err in errors.password"
           :key="err"
@@ -75,7 +78,7 @@ const {
             name="remember"
             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           >
-          <span class="ml-2 text-sm text-gray-600">Remember me</span>
+          <span class="ml-2 text-sm text-gray-600">{{ $t('login.remember_me') }}</span>
         </label>
       </div>
 
@@ -85,7 +88,7 @@ const {
           class="ml-6 cursor-pointer"
           type="submit"
           :disabled="inProgress"
-          value="Login"
+          :value="$t('login.submit_button_title')"
         >
       </div>
     </form>

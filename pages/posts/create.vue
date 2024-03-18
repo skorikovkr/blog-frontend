@@ -9,6 +9,12 @@ import CodeTool from '@editorjs/code';
 // @ts-ignore
 import InlineCode from '@editorjs/inline-code';
 import { onMounted } from 'vue';
+const { t } = useI18n();
+
+useHead({
+  title: t('posts.create.meta.title')
+});
+
 const { locale, locales } = useI18n()
 
 definePageMeta({ middleware: ["auth"] });
@@ -86,7 +92,7 @@ const handleCreatePost = async () => {
     >
       <div class="post-main-info flex flex-col gap-2">
         <div class="flex flex-col gap-2">
-          <label for="title">{{ $t('create_post.title_label') }}:</label>
+          <label for="title">{{ $t('posts.create.title_label') }}:</label>
           <PrimeInputText 
             id="title"
             class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
@@ -94,7 +100,7 @@ const handleCreatePost = async () => {
           />
         </div>
         <div class="flex flex-col gap-2">
-          <label for="description">{{ $t('create_post.description_label') }}:</label>
+          <label for="description">{{ $t('posts.create.description_label') }}:</label>
           <PrimeInputText 
             id="description"
             class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
@@ -103,7 +109,7 @@ const handleCreatePost = async () => {
         </div>
 
         <div class="flex flex-col gap-2">
-          <label for="locale">{{ $t('create_post.lang_selectbox_label') }}:</label>
+          <label for="locale">{{ $t('posts.create.lang_selectbox_label') }}:</label>
           <PrimeDropdown 
             id="locale" 
             v-model="lang" 
@@ -127,7 +133,7 @@ const handleCreatePost = async () => {
 
       <PrimeButton 
         type="submit" 
-        :label="$t('create_post.submit_button_text')"
+        :label="$t('posts.create.submit_button_text')"
       />
     </form>
   </div>

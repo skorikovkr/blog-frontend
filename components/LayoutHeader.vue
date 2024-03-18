@@ -39,21 +39,23 @@
 
 <script lang="ts" setup>
 const userStore = useUserStore();
-const navLinks = ref([
+const { t } = useI18n();
+
+const navLinks = computed(() => [
   {
-    title: 'Home',
+    title: t('header.nav.links.home_title'),
     href: '/'
   },
   {
-    title: 'Posts',
+    title: t('header.nav.links.posts_title'),
     href: '/posts'
   },
   {
-    title: 'Login',
+    title: t('header.nav.links.login_title'),
     href: '/login'
   },
   {
-    title: 'Logout',
+    title: t('header.nav.links.logout_title'),
     href: '/logout'
   }
 ]);

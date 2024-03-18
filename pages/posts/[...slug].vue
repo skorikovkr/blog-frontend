@@ -1,13 +1,20 @@
 <script lang="ts" setup>
-
 const route = useRoute();
 
 const { data, pending } = await useLaravelFetch(`/api/posts/${route.params.slug}`);
+
 const postContent = (data as any).value.data.content;
 </script>
 
 <template>
   <div class="post-page">
+    <!-- SEO -->
+    <Head>
+      <Title>{{ (data as any).data.title }}</Title>
+      <Meta name="description" :content="(data as any).data.description" />
+    </Head>
+    <!-- SEO -->
+
     <div 
       v-if="!pending"
       class="post-container" 
@@ -19,7 +26,7 @@ const postContent = (data as any).value.data.content;
               <dl class="space-y-10">
                 <div>
                   <dt class="sr-only">
-                    Published on
+                    {{ $t('posts.index.meta.published_on') }}
                   </dt>
                   <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time :dateTime="(data as any).data.date">{{ $d((data as any).data.date) }}</time>
@@ -75,7 +82,7 @@ const postContent = (data as any).value.data.content;
       </article>
     </div>
     <div v-else>
-      Загрузка...
+      {{ $t('index.loading_text') }}
     </div>
   </div>
 </template>

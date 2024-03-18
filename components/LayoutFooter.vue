@@ -3,7 +3,7 @@
     <PrimeDialog 
       v-model:visible="isTelegramDialogVisible"
       modal 
-      header="My telegram" 
+      :header="$t('footer.my_telegram')" 
       :style="{ width: '15rem' }"
     >
       <span class="p-text-secondary block mb-5">@skorikovkr</span>
