@@ -1,22 +1,24 @@
 <template>
   <div class="mobile-nav w-[24px] sm:hidden">
-    <button
-      class="w-full"
-      @click="handleToggleButtonClick"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        className="h-8 w-8 text-gray-900 dark:text-gray-100"
+    <div class="flex">
+      <button
+        class="w-full my-auto"
+        @click="handleToggleButtonClick"
       >
-        <path
-          fillRule="evenodd"
-          d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="h-8 w-8 text-gray-900 dark:text-gray-100"
+        >
+          <path
+            fillRule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
     <div
       class="fixed left-0 top-0 z-10 h-full w-full transform bg-white opacity-95 duration-300 ease-in-out dark:bg-gray-950 dark:opacity-[0.98]"
       :class="[ isShown ? 'translate-x-0' : 'translate-x-full' ]"
@@ -40,7 +42,7 @@
           </svg>
         </button>
       </div>
-      <nav class="fixed mt-8 h-full px-12 py-4">
+      <nav class="fixed mt-8 h-[80%] px-12 py-4 flex flex-col">
         <NuxtLink
           v-for="link in navLinks"
           :key="link.title"
@@ -50,6 +52,10 @@
         >
           {{ link.title }}
         </NuxtLink>
+        <div class="control-buttons flex gap-4 mt-auto">
+          <LocaleSwitcher />
+          <ColorModePicker />
+        </div>
       </nav>
     </div>
   </div>

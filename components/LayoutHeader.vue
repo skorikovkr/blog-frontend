@@ -25,8 +25,10 @@
         </NuxtLink>
       </template>
       <ClientOnly>
-        <LocaleSwitcher />
-        <ColorModePicker />
+        <div class="control-buttons hidden gap-4 sm:flex">
+          <LocaleSwitcher />
+          <ColorModePicker />
+        </div>
         <MobileNav
           :nav-links="navLinks"
         />

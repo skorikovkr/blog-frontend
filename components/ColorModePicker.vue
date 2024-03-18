@@ -1,6 +1,7 @@
 <template>
-  <div class="color-mode-picker">
+  <div class="color-mode-picker flex">
     <button
+      class="my-auto"
       @click="handleThemeButtonClick"
     >
       <svg

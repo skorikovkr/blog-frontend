@@ -11,9 +11,9 @@
         <li
           v-for="post in (data as any).data"
           :key="post.id"
-          class="post-card py-4"
+          class="post-card py-4 "
         >
-          <article class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+          <article class="space-y-2 xl:grid xl:grid-cols-6 xl:items-baseline xl:space-y-0 ">
             <dl>
               <dt class="sr-only">
                 Published on
@@ -22,7 +22,7 @@
                 <time :dateTime="post.date">{{ $d(post.date) }}</time>
               </dd>
             </dl>
-            <div class="space-y-3 xl:col-span-3">
+            <div class="space-y-3 xl:col-span-5">
               <div>
                 <h3 class="text-2xl font-bold leading-8 tracking-tight">
                   <NuxtLink
