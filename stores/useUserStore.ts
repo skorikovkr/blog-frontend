@@ -17,8 +17,10 @@ export const useUserStore = defineStore(
       } catch (error: any) {
         if ([401, 419].includes(error?.response?.status))
           user.value = null;
-        else
-          throw error;
+        else {
+          console.log('Auth server is unavialable.');
+          //throw error;
+        }
       }
     };
 
