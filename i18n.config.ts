@@ -4,6 +4,7 @@ export default defineI18nConfig(() => ({
       pagination: {
         next: 'Next',
         prev: 'Previous',
+        of: 'of'
       },
       create_post: {
         submit_button_text: 'Create post',
@@ -25,6 +26,7 @@ export default defineI18nConfig(() => ({
       pagination: {
         next: 'Следующая',
         prev: 'Предыдущая',
+        of: 'из'
       },
       create_post: {
         submit_button_text: 'Создать статью',

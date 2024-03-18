@@ -12,7 +12,9 @@ const postContent = (data as any).value.data.content;
       v-if="!pending"
       class="post-container" 
     >
-      <h1>{{ (data as any).data.title }}</h1>
+      <h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+        {{ (data as any).data.title }}
+      </h1>
       <time>{{ $d((data as any).data.date) }}</time>
       <div
         v-for="block in postContent"
@@ -33,10 +35,16 @@ const postContent = (data as any).value.data.content;
           />
         </template>
         <template v-else-if="block.type == 'header'">
-          <h2 v-if="block.data.level === 2">
+          <h2 
+            v-if="block.data.level === 2"
+            class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+          >
             {{ block.data.text }}
           </h2>
-          <h3 v-else-if="block.data.level === 3">
+          <h3 
+            v-else-if="block.data.level === 3"
+            class="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+          >
             {{ block.data.text }}
           </h3>
         </template>
