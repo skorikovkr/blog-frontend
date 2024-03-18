@@ -18,7 +18,9 @@ const postContent = (data as any).value.data.content;
             <div class="space-y-1 text-center">
               <dl class="space-y-10">
                 <div>
-                  <dt class="sr-only">Published on</dt>
+                  <dt class="sr-only">
+                    Published on
+                  </dt>
                   <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time :dateTime="(data as any).data.date">{{ $d((data as any).data.date) }}</time>
                   </dd>
@@ -44,7 +46,7 @@ const postContent = (data as any).value.data.content;
                 <ServerImage :src="block.data.src" />
               </template>
               <template v-else-if="block.type == 'paragraph'">
-                <p class="">{{ block.data.text }}</p>
+                <p>{{ block.data.text }}</p>
               </template>
               <template v-else-if="block.type == 'code'">
                 <CodeSnippet

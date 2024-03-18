@@ -10,14 +10,20 @@
       </NuxtLink>
     </div>
     <div class="flex items-center space-x-4 leading-5 sm:space-x-6">
-      <NuxtLink
+      <template
         v-for="link in navLinks"
         :key="link.title"
-        :to="link.href"
-        class="hidden font-medium text-gray-900 dark:text-gray-100 sm:block"
       >
-        {{ link.title }}
-      </NuxtLink>
+        <NuxtLink
+          v-if="
+            (link.href !== '/login' && link.href !== '/logout') || !(link.href === '/login' && userStore.isLoggedIn || link.href === '/logout' && !userStore.isLoggedIn)
+          "
+          :to="link.href"
+          class="hidden font-medium text-gray-900 dark:text-gray-100 sm:block"
+        >
+          {{ link.title }}
+        </NuxtLink>
+      </template>
       <ClientOnly>
         <LocaleSwitcher />
         <ColorModePicker />
@@ -30,18 +36,23 @@
 </template>
 
 <script lang="ts" setup>
+const userStore = useUserStore();
 const navLinks = ref([
   {
     title: 'Home',
     href: '/'
   },
   {
-    title: 'About',
-    href: '/about'
+    title: 'Posts',
+    href: '/posts'
   },
   {
-    title: 'Post',
-    href: '/posts/create'
+    title: 'Login',
+    href: '/login'
+  },
+  {
+    title: 'Logout',
+    href: '/logout'
   }
 ]);
 </script>

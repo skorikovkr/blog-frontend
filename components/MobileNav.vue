@@ -1,6 +1,9 @@
 <template>
   <div class="mobile-nav w-[24px] sm:hidden">
-    <button class="w-full" @click="handleToggleButtonClick">
+    <button
+      class="w-full"
+      @click="handleToggleButtonClick"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
@@ -19,7 +22,10 @@
       :class="[ isShown ? 'translate-x-0' : 'translate-x-full' ]"
     >
       <div class="flex justify-end">
-        <button class="mr-8 mt-11 h-8 w-8" @click="handleToggleButtonClick">
+        <button
+          class="mr-8 mt-11 h-8 w-8"
+          @click="handleToggleButtonClick"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"

@@ -1,15 +1,26 @@
 <script lang="ts" setup>
 import EditorJS from '@editorjs/editorjs';
+// @ts-ignore
 import Header from '@editorjs/header';
+// @ts-ignore
 import Paragraph from '@editorjs/paragraph';
+// @ts-ignore
 import CodeTool from '@editorjs/code';
+// @ts-ignore
 import InlineCode from '@editorjs/inline-code';
 import { onMounted } from 'vue';
 const { locale, locales } = useI18n()
 
+definePageMeta({ middleware: ["auth"] });
+
 const runtimeConfig = useRuntimeConfig();
-const title = ref('');
-const lang = ref(locale.value);
+// i18n has incorrect type of 'locale'
+type truei18nLocaleType = {
+  name: string,
+  code: string
+}
+// @ts-ignore
+const lang = ref<truei18nLocaleType>(locale.value);
 const postForm = ref();
 const editor = new EditorJS({
   readOnly: false,
@@ -78,9 +89,16 @@ const handleCreatePost = async () => {
           <label for="title">{{ $t('create_post.title_label') }}:</label>
           <PrimeInputText 
             id="title"
-            v-model="title"
             class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
             name="title" 
+          />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="description">{{ $t('create_post.description_label') }}:</label>
+          <PrimeInputText 
+            id="description"
+            class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+            name="description" 
           />
         </div>
 
