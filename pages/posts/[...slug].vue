@@ -53,7 +53,7 @@ const postContent = (data as any).value.data.content;
                 <ServerImage :src="block.data.src" />
               </template>
               <template v-else-if="block.type == 'paragraph'">
-                <p>{{ block.data.text }}</p>
+                <p v-html="sanitizeHTML(block.data.text)"></p>
               </template>
               <template v-else-if="block.type == 'code'">
                 <CodeSnippet
@@ -66,15 +66,13 @@ const postContent = (data as any).value.data.content;
                 <h2 
                   v-if="block.data.level === 2"
                   class="text-2xl font-extrabold leading-6 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-8 md:text-5xl md:leading-10"
-                >
-                  {{ block.data.text }}
-                </h2>
+                  v-html="sanitizeHTML(block.data.text)"
+                />
                 <h3 
                   v-else-if="block.data.level === 3"
                   class="text-xl font-extrabold leading-5 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-8 md:text-3xl md:leading-10"
-                >
-                  {{ block.data.text }}
-                </h3>
+                  v-html="sanitizeHTML(block.data.text)"
+                />
               </template>
             </div>
           </div>

@@ -47,6 +47,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/posts/create': { ssr: false },
+    '/posts/**': { ssr: true }
   },
   colorMode: {
     classSuffix: ''
