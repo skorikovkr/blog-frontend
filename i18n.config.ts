@@ -23,7 +23,8 @@ export default defineI18nConfig(() => ({
         loading_text: 'Loading...',
         meta: {
           title: 'Home',
-          description: 'Blog about web development (Laravel + Nuxt).'
+          description: 'Blog about web development (Laravel + Nuxt).',
+          description_label: 'Description',
         },
         my_blog: 'My blog.',
         text_1: 'This blog is my pet project.',
@@ -81,7 +82,8 @@ export default defineI18nConfig(() => ({
         loading_text: 'Загрузка...',
         meta: {
           title: 'Домашняя страница',
-          description: 'Мой блог о веб разработке (Laravel + Nuxt).'
+          description: 'Мой блог о веб разработке (Laravel + Nuxt).',
+          description_label: 'Описание',
         },
         my_blog: 'Мой блог.',
         text_1: 'Блог является одним из моих личных проектов.',

@@ -59,9 +59,14 @@ const handleOptionsChanged = async (currentPage: string, per: string) => {
                   </NuxtLink>
                 </h3>
               </div>
-              <div class="prose max-w-none text-gray-500 dark:text-gray-400">
-                {{ post.description ?? $t('posts.index.no_description') }}
-              </div>
+              <dl class="prose max-w-none text-gray-500 dark:text-gray-400">
+                <dt class="sr-only">
+                  {{ $t('index.meta.description_label') }}
+                </dt>
+                <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                  <span class="post-description">{{ post.description ?? $t('posts.index.no_description') }}</span>
+                </dd>
+              </dl>
             </div>
           </article>
         </li>

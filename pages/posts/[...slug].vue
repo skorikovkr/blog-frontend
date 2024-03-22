@@ -1,8 +1,10 @@
+<!-- eslint-disable vue/html-self-closing -->
 <script lang="ts" setup>
 const route = useRoute();
 
 const { data, pending } = await useLaravelFetch(`/api/posts/${route.params.slug}`);
 
+const post = (data as any).value.data;
 const postContent = (data as any).value.data.content;
 </script>
 
@@ -10,8 +12,8 @@ const postContent = (data as any).value.data.content;
   <div class="post-page">
     <!-- SEO -->
     <Head>
-      <Title>{{ (data as any).data.title }}</Title>
-      <Meta name="description" :content="(data as any).data.description" />
+      <Title>{{ post.title }}</Title>
+      <Meta name="description" :content="post.description" />
     </Head>
     <!-- SEO -->
 
@@ -23,21 +25,25 @@ const postContent = (data as any).value.data.content;
         <div class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header class="pt-6 xl:pb-6">
             <div class="space-y-1 text-center">
+              <h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+                {{ post.title }}
+              </h1>
               <dl class="space-y-10">
                 <div>
                   <dt class="sr-only">
                     {{ $t('posts.index.meta.published_on') }}
                   </dt>
+                  <dd class="text-base my-2 font-medium leading-6 text-gray-500 dark:text-gray-400">
+                    <time :dateTime="post.date">{{ $d(post.date) }}</time>
+                  </dd>
+                  <dt class="sr-only">
+                    {{ $t('index.meta.description_label') }}
+                  </dt>
                   <dd class="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time :dateTime="(data as any).data.date">{{ $d((data as any).data.date) }}</time>
+                    <span class="post-description block max-w-xl mx-auto">{{ post.description }}</span>
                   </dd>
                 </div>
               </dl>
-              <div>
-                <h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
-                  {{ (data as any).data.title }}
-                </h1>
-              </div>
             </div>
           </header>
         </div>
