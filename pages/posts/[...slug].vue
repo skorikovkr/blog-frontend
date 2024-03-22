@@ -11,8 +11,6 @@ const toast = useToast();
 const route = useRoute();
 const userStore = useUserStore();
 const { data, pending } = await useLaravelFetch(`/api/posts/${route.params.slug}`);
-
-console.log(userStore.user);
   
 const post = (data as any).value.data;
 const postContent = (data as any).value.data.content;
@@ -112,7 +110,7 @@ const confirmDelete = () => {
                 <ServerImage :src="block.data.src" />
               </template>
               <template v-else-if="block.type == 'paragraph'">
-                <p v-html="sanitizeHTML(block.data.text)"></p>
+                <p class="post-paragraph" v-html="sanitizeHTML(block.data.text)"></p>
               </template>
               <template v-else-if="block.type == 'code'">
                 <CodeSnippet
@@ -149,5 +147,3 @@ const confirmDelete = () => {
     </div>
   </div>
 </template>
-
-<style></style>
