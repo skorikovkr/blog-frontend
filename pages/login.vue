@@ -38,14 +38,13 @@ const {
       <div>
         <label for="email">{{ $t('login.email') }}</label>
         <div>{{ errors.email?.[0] }}</div>
-        <input
+        <PrimeInputText
           id="email"
           v-model="data.email"
           type="email"
-          class="block mt-1 w-full"
+          class="block mt-1 w-full text-gray-900 dark:text-gray-100"
           required
-          autoFocus
-        >
+        />
       </div>
 
       <div class="mt-4">
@@ -56,14 +55,14 @@ const {
         >
           {{ err }}
         </div>
-        <input
+        <PrimeInputText
           id="password"
           v-model="data.password"
           type="password"
-          class="block mt-1 w-full"
+          class="block mt-1 w-full text-gray-900 dark:text-gray-100"
           required
-          autoComplete="current-password"
-        >
+          auto-complete="current-password"
+        />
       </div>
 
       <div class="block mt-4">
@@ -76,20 +75,19 @@ const {
             v-model="data.remember"
             type="checkbox"
             name="remember"
-            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            class="rounded border-gray-300 text-primary-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           >
-          <span class="ml-2 text-sm text-gray-600">{{ $t('login.remember_me') }}</span>
+          <span class="ml-2 text-gray-900 dark:text-gray-100">{{ $t('login.remember_me') }}</span>
         </label>
       </div>
 
       <div class="flex items-center justify-end mt-4">
         <div v-if="inProgress" class="cdx-loader"></div>
-        <input
-          class="ml-6 cursor-pointer"
+        <PrimeButton
           type="submit"
           :disabled="inProgress"
-          :value="$t('login.submit_button_title')"
-        >
+          :label="$t('login.submit_button_title')"
+        />
       </div>
     </form>
   </div>
