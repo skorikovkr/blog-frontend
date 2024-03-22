@@ -1,11 +1,56 @@
+<!-- eslint-disable vue/no-v-html -->
 <!-- eslint-disable vue/html-self-closing -->
 <script lang="ts" setup>
-const route = useRoute();
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
+const { start, finish } = useLoadingIndicator();
+const { t } = useI18n();
+const confirm = useConfirm();
+const toast = useToast();
+const route = useRoute();
+const userStore = useUserStore();
 const { data, pending } = await useLaravelFetch(`/api/posts/${route.params.slug}`);
 
+console.log(userStore.user);
+  
 const post = (data as any).value.data;
 const postContent = (data as any).value.data.content;
+
+const confirmDelete = () => {
+    confirm.require({
+        message: t('posts.concrete_post.confirm_delete_dialog'),
+        header: t('posts.concrete_post.confirm_delete_header'),
+        icon: 'pi pi-info-circle',
+        rejectLabel: t('posts.concrete_post.confirm_delete_reject'),
+        acceptLabel: t('posts.concrete_post.confirm_delete_accept'),
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+          start();
+          try {
+            await $laravelFetch(`/api/posts/${post.id}`, {
+              method: 'delete'
+            });
+          } catch (error) {
+            toast.add({ 
+              severity: 'error', 
+              summary: t('posts.concrete_post.toast_delete_rejected_summary'), 
+              detail: t('posts.concrete_post.toast_delete_rejected_detail'), 
+              life: 3000 
+            });
+          }
+          finish();
+          toast.add({ 
+            severity: 'info', 
+            summary: t('posts.concrete_post.toast_delete_confirmed_summary'), 
+            detail: t('posts.concrete_post.toast_delete_confirmed_detail'), 
+            life: 3000 
+          });
+        }
+    });
+};
+
 </script>
 
 <template>
@@ -16,11 +61,19 @@ const postContent = (data as any).value.data.content;
       <Meta name="description" :content="post.description" />
     </Head>
     <!-- SEO -->
-
+    
     <div 
       v-if="!pending"
       class="post-container" 
     >
+      <PrimeToast position="bottom-right" />
+      <PrimeConfirmDialog>
+        <template #message="slotProps">
+          <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+            <p>{{ slotProps.message.message }}</p>
+          </div>
+        </template>
+      </PrimeConfirmDialog>
       <article>
         <div class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header class="pt-6 xl:pb-6">
@@ -82,6 +135,12 @@ const postContent = (data as any).value.data.content;
               </template>
             </div>
           </div>
+          <PrimeButton
+            v-if="userStore.isLoggedIn && (userStore.user!.id == post.author_id || userStore.user?.roles.find(r => r.name === 'Admin'))"
+            severity="danger" 
+            :label="$t('posts.index.delete_post')" 
+            @click="confirmDelete"
+          />
         </div>
       </article>
     </div>
