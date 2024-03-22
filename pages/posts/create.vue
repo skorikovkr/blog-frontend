@@ -95,7 +95,7 @@ const handleCreatePost = async () => {
           <label for="title">{{ $t('posts.create.title_label') }}:</label>
           <PrimeInputText 
             id="title"
-            class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+            class="text-2xl font-extrabold leading-7 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-6 md:text-3xl md:leading-10"
             name="title" 
           />
         </div>
@@ -103,7 +103,7 @@ const handleCreatePost = async () => {
           <label for="description">{{ $t('posts.create.description_label') }}:</label>
           <PrimeInputText 
             id="description"
-            class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14"
+            class="text-xl leading-3 tracking-tight text-gray-900 dark:text-gray-100"
             name="description" 
           />
         </div>

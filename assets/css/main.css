@@ -28,6 +28,11 @@
     --surface-950: 3 6 23;
 }
 
+/* Post styles */
+.post-paragraph a {
+  text-decoration: underline;
+}
+
 /* hljs styles */
 pre code.hljs {
     display: block;
