@@ -124,3 +124,23 @@ pre code.hljs {
   .hljs-link {
     text-decoration: underline
   }
+  
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/Inter.ttf) format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Inter-ExtraBold';
+    font-style: normal;
+    src: url(/fonts/Inter-ExtraBold.ttf) format('truetype');
+  }
+  
+  @layer base {
+    html {
+      font-family: Inter, 'Segoe UI', Roboto, sans-serif;
+    }
+  }

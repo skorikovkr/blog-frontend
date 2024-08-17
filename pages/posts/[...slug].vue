@@ -56,7 +56,10 @@ const confirmDelete = () => {
     <!-- SEO -->
     <Head>
       <Title>{{ post.title }}</Title>
-      <Meta name="description" :content="post.description" />
+      <Meta
+        name="description"
+        :content="post.description"
+      />
     </Head>
     <!-- SEO -->
     
@@ -110,7 +113,10 @@ const confirmDelete = () => {
                 <ServerImage :src="block.data.src" />
               </template>
               <template v-else-if="block.type == 'paragraph'">
-                <p class="post-paragraph" v-html="sanitizeHTML(block.data.text)"></p>
+                <p
+                  class="post-paragraph"
+                  v-html="sanitizeHTML(block.data.text)"
+                />
               </template>
               <template v-else-if="block.type == 'code'">
                 <CodeSnippet

@@ -10,7 +10,7 @@ useSeoMeta({
 const perPage  = ref('5');
 const page = ref('1');
 
-const { data, pending, refresh } = await useLaravelFetch('/api/posts', {
+const { data, pending, error, refresh } = await useLaravelFetch('/api/posts', {
   query: {
     page: page,
     perPage: perPage
@@ -30,7 +30,7 @@ const handleOptionsChanged = async (currentPage: string, per: string) => {
       <PrimeButton :label="$t('posts.index.write_new_post_button')" />
     </NuxtLink>
     <div 
-      v-if="!pending"
+      v-if="!pending && !error"
       class="posts-container flex flex-col justify-center" 
     >
       <ul>
