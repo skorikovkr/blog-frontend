@@ -82,7 +82,10 @@ const {
       </div>
 
       <div class="flex items-center justify-end mt-4">
-        <div v-if="inProgress" class="cdx-loader"></div>
+        <div
+          v-if="inProgress"
+          class="cdx-loader"
+        />
         <PrimeButton
           type="submit"
           :disabled="inProgress"

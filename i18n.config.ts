@@ -26,7 +26,10 @@ export default defineI18nConfig(() => ({
           description: 'Blog about web development (Laravel + Nuxt).',
           description_label: 'Description',
         },
-        my_blog: 'My blog.',
+        my_blog: {
+          text_1: 'My',
+          text_2: 'blog'
+        },
         text_1: 'This blog is my pet project.',
         text_2: 'Used tech stack:',
       },
@@ -96,7 +99,10 @@ export default defineI18nConfig(() => ({
           description: 'Мой блог о веб разработке (Laravel + Nuxt).',
           description_label: 'Описание',
         },
-        my_blog: 'Мой блог.',
+        my_blog: {
+          text_1: 'Мой',
+          text_2: 'блог'
+        },
         text_1: 'Блог является одним из моих личных проектов.',
         text_2: 'Используемый стек:',
       },

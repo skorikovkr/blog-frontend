@@ -111,7 +111,6 @@ const handleCreatePost = async () => {
         <div class="flex flex-col gap-2">
           <label for="locale">{{ $t('posts.create.lang_selectbox_label') }}:</label>
           <PrimeDropdown 
-            id="locale" 
             v-model="lang" 
             :options="locales" 
             option-label="code" 
@@ -119,6 +118,7 @@ const handleCreatePost = async () => {
           />
         </div>
         <input
+          id="locale" 
           type="text"
           name="locale"
           hidden 
