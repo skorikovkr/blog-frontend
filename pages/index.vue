@@ -69,7 +69,7 @@ onMounted(() => {
       <p>Blog adout Web-development</p>
     </div>
     <div class="flex justify-between flex-col-reverse xl:flex-row mt-10 max-w-7xl">
-      <div class="grid grid-cols-2 xl:flex xl:flex-col gap-4 p-4 xl:min-w-[630px]">
+      <div class="flex flex-col gap-4 p-4 xl:min-w-[630px]">
         <div class="bg-slate-700 rounded-lg">
           <div class="text-end text-white font-medium text-md px-2 py-1 border-b-[1px] border-slate-400">
             C#
